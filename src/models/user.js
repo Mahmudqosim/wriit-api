@@ -16,9 +16,17 @@ const UserSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    avatar: String,
+    avatar: {
+      data: String,
+    },
+    bio: {
+      type: String,
+      default: '',
+      maxLength: 250
+    },
   },
+
   { timestamps: true }
 )
 
-export const User = mongoose.model('User', UserSchema)
+export const User = mongoose.model("User", UserSchema)

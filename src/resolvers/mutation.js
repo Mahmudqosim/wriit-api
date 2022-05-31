@@ -8,7 +8,7 @@ import mongoose from "mongoose"
 dotenv.config()
 
 export default {
-  newNote: async (parent, { title, content }, { models, user }) => {
+  newNote: async (parent, { title, content, image }, { models, user }) => {
     if (!user) {
       throw new AuthenticationError("You must be signed in to create a note!")
     }
@@ -16,13 +16,14 @@ export default {
     return await models.Note.create({
       title,
       content,
+      image,
       author: mongoose.Types.ObjectId(user.id),
     })
   },
 
   deleteNote: async (parent, { id }, { models, user }) => {
     if (!user) {
-      throw new AuthenticationError("You must be signed in to create a note!")
+      throw new AuthenticationError("You must be signed in to delete a note!")
     }
 
     const note = await models.Note.findById(id)
@@ -41,9 +42,9 @@ export default {
     }
   },
 
-  updateNote: async (parent, { id, title, content }, { models, user }) => {
+  updateNote: async (parent, { id, title, content, image }, { models, user }) => {
     if (!user) {
-      throw new AuthenticationError("You must be signed in to create a note!")
+      throw new AuthenticationError("You must be signed in to update a note!")
     }
 
     const note = await models.Note.findById(id)
@@ -54,7 +55,7 @@ export default {
 
     return await models.Note.findOneAndUpdate(
       { _id: id },
-      { $set: { title, content } },
+      { $set: { title, content, image } },
       { new: true }
     )
   },
@@ -103,6 +104,25 @@ export default {
 
     return jwt.sign({ id: user.id }, process.env.JWT_SECRET)
   },
+
+  // User Actions
+  updateUser: async (parent, { id, avatar, username, email, bio}, { models, user }) => {
+    if (!user) {
+      throw new AuthenticationError("You must be signed in to update your account")
+    }
+    
+/*     const nuser = await models.User.findById(id)
+
+    if (nuser && String(nuser._id) !== user.id) {
+      throw new ForbiddenError("You don't have permissions to update this account.")
+    } */
+
+    return await models.User.findOneAndUpdate(
+      { _id: id },
+      { $set: { avatar, username, email, bio } }
+    )
+  },
+
 
   toggleFavorite: async (parent, { id }, { models, user }) => {
     if(!user) throw new AuthenticationError()
