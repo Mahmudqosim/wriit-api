@@ -4,8 +4,6 @@ export const connect = (DB_HOST) => {
   // Connect to the DB
   mongoose.connect(DB_HOST, {
     useNewUrlParser: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
     useUnifiedTopology: true,
   })
 
