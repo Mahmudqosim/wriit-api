@@ -4,8 +4,8 @@ import dotenv from "dotenv"
 import jwt from "jsonwebtoken"
 import helment from "helmet"
 import cors from "cors"
-// import depthLimit from "graphql-depth-limit"
-// import { createComplexityLimitRule } from "graphql-validation-complexity"
+import depthLimit from "graphql-depth-limit"
+import { createComplexityLimitRule } from "graphql-validation-complexity"
 
 import * as db from "./db/db.js"
 import { models } from "./models/index.js"
@@ -37,7 +37,7 @@ const getUser = (token) => {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  // validationRules: [depthLimit(5), createComplexityLimitRule(1000)],
+  validationRules: [depthLimit(5), createComplexityLimitRule(1000)],
   context: ({ req }) => {
     const token = req.headers.authorization
 
