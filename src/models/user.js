@@ -17,12 +17,13 @@ const UserSchema = mongoose.Schema(
       required: true,
     },
     avatar: {
-      data: String,
+      data: Buffer,
+      contentType: String,
     },
     bio: {
       type: String,
-      default: '',
-      maxLength: 250
+      default: "",
+      maxLength: 250,
     },
   },
 

@@ -11,7 +11,8 @@ const NoteSchema = new mongoose.Schema(
       required: true,
     },
     image: {
-      type: String,
+      data: Buffer,
+      contentType: String,
     },
     author: {
       type: mongoose.Schema.Types.ObjectId,
