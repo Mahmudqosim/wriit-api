@@ -17,8 +17,7 @@ const UserSchema = mongoose.Schema(
       required: true,
     },
     avatar: {
-      data: Buffer,
-      contentType: String,
+      type: String
     },
     bio: {
       type: String,
