@@ -47,8 +47,6 @@ const server = new ApolloServer({
   },
 })
 
-await server.start()
-
 server.applyMiddleware({ app, path: "/api" })
 
 app.listen({ port }, () => {
